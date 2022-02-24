@@ -1,0 +1,9 @@
+version: "3.7"
+services: 
+  app: 
+    build: .
+    volumes:
+       - ./src:/src
+    container_name: src
+    ports: 
+       - "4000:4000"
