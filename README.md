@@ -12,7 +12,7 @@ an service account credential is needed so you need to overwrite the current `gc
 
 ## Orchestator
 
-1. For the execution of this test, the local path contanin the solution must be updated inside the `carto-test.ipynb` :
+1. For the execution of this test, the local path contaning the solution must be updated inside the `carto-test.ipynb` :
 2. The first approach was made on KMEANS model for clustering by labels
 3. However many labels were null so an BDSCAND model tries to cluster a second soltion, also handle outliers. So a new column was create in the csv result file. 
 4. Finally, the iterations are plotted using CARTOframe functions. 
