@@ -37,7 +37,11 @@ def get_restaurants_bq(query_string):
     restaurants_geo = gpd.GeoDataFrame(restaurants, geometry=gpd.points_from_xy(restaurants.lon, restaurants.lat))
     restaurants_geo.crs = {'init': u'epsg:4326'}
     kmeans5 = cluster.KMeans(n_clusters=5).fit(restaurants_geo[attributescode])
-    restaurants_geo['cluster_id'] = kmeans5.labels_
+    restaurants_geo['cluster_km2_id'] = kmeans5.labels_
+    restaurants_geo['poi_id'] = restaurants_geo["id"]
+
+    kmeans5 = cluster.KMeans(n_clusters=5).fit(restaurants_geo[['lon','lat']])
+    restaurants_geo['cluster_km_id'] = kmeans5.labels_
     restaurants_geo['poi_id'] = restaurants_geo["id"]
 
    #DBSCAN
@@ -47,7 +51,7 @@ def get_restaurants_bq(query_string):
 
 
    #Generate CSV FILE --
-    csvheader=["lon","lat","cluster_id","cluster_db_id","poi_id"]
+    csvheader=["lon","lat","cluster_km_id","cluster_db_id","cluster_km2_id","poi_id"]
     restaurants_csv = restaurants_geo[csvheader]
     filepath = str(pathlib.Path().absolute()) + "/restaurants.csv"
     #filepath.parent.mkdir(parents=True, exist_ok=True) 
